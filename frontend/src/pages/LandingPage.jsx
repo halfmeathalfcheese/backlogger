@@ -4,11 +4,10 @@ import { Button } from '@mui/material';
 const LandingPage = () => {
   const handleClick = () => {
     fetch('http://localhost:3001/api/search', {
-      method: 'POST',
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ query: 'Fallout New Vegas' })
+      }
     })
       .then(response => response.json())
       .then(data => console.log(data))

@@ -15,18 +15,17 @@ app.listen(PORT, () => {
 });
 
 let token = '';
-// Get IGDB token
 const getToken = async () => {
     token = await igdb.getToken();
     console.log('token set as: ', token);
 }
-
 getToken();
 
-// Search IGDB for Fallout New Vegas
-app.post('/api/search', async (req, res) => {
+// Search IGDB for search query
+app.get('/api/search', async (req, res) => {
     try {
-        const response = await igdb.search(token, req.body.query);
+        const query = req.query.query;
+        const response = await igdb.search(token, query);
         res.json(response);
     } catch (error) {
         res.status(500).json({ message: error.message });

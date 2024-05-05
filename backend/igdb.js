@@ -18,7 +18,7 @@ const search = async (token, query) => {
                 'Client-ID': CLIENT_ID,
                 'Authorization': `Bearer ${token}`
             },
-            body: `fields name; search "${query}";`
+            body: `fields name, release_dates; search "${query}";`
         });
         const data = await response.json();
         return data;
