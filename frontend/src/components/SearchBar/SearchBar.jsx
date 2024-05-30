@@ -7,6 +7,10 @@ const SearchBar = () => {
   const [options, setOptions] = React.useState([]);
 
   const doSearch = (searchQuery) => {
+    if (searchQuery === '') {
+      setOptions([]);
+      return;
+    }
     console.log('run')
     // Fetch data from API
     fetch(`http://localhost:3001/api/search?query=${searchQuery}`, {
@@ -23,7 +27,7 @@ const SearchBar = () => {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       doSearch(inputValue);
-    }, 750);
+    }, 500);
     return () => clearTimeout(timeoutId);
   }, [inputValue]);
 
@@ -36,7 +40,7 @@ const SearchBar = () => {
       freeSolo
       id="search-bar"
       options={options}
-      getOptionLabel={(option) => option && option.name ? option.name : "not there"}
+      getOptionLabel={(option) => option && option.name ? option.name : ""}
       sx={{
         width: '100%',
       }}
@@ -54,8 +58,7 @@ const SearchBar = () => {
               </InputAdornment>
             ),
             onChange: (event) => {
-              const newValue = event.target.value;
-              setInputValue(newValue);
+              setInputValue(event.target.value);
             },
           }}
           sx={{

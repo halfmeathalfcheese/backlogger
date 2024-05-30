@@ -10,6 +10,42 @@ const getToken = async () => {
     return data.access_token;
 }
 
+const createDatabase = async (token) => {
+    let offset = 266445;
+    let data = [];
+    try {
+        while (true) {
+            const response = await fetch(`https://api.igdb.com/v4/games`, {
+                method: 'POST',
+                headers: {
+                    'Client-ID': CLIENT_ID,
+                    'Authorization': `Bearer ${token}`
+                },
+                body: `fields 
+                id, name, alternative_names, artworks, 
+                category, cover, dlcs, expanded_games, 
+                first_release_date, franchise, genres, involved_companies, 
+                parent_game, platforms, rating, rating_count, similar_games, 
+                slug, standalone_expansions, status, storyline, summary, tags, 
+                total_rating, total_rating_count, updated_at, url, websites;
+                limit 500;
+                offset ${offset};`
+            });
+            const newData = await response.json();
+            if (newData.length === 0) {
+                break;
+            }
+            data = data.concat(newData);
+            offset += 500;
+            console.log(`Fetched ${offset} games...`)
+        }
+        return data;
+    } catch (error) {
+        console.log(error);
+        throw new Error('Failed to search');
+    }
+}
+
 const search = async (token, query) => {
     try {
         const response = await fetch(`https://api.igdb.com/v4/games`, {
@@ -28,4 +64,4 @@ const search = async (token, query) => {
     }
 }
 
-module.exports = { getToken, search };
+module.exports = { getToken, search, createDatabase };
