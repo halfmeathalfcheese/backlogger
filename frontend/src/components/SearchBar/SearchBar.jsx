@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Autocomplete, InputAdornment, TextField } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
+import categoryEnums from '../../utils/GameCategory.json'
 
 const SearchBar = () => {
   const [inputValue, setInputValue] = React.useState('');
@@ -20,7 +21,7 @@ const SearchBar = () => {
       }
     })
       .then(response => response.json())
-      .then(data => setOptions(data))
+      .then(data => setOptions(data.map(game => ({ name: game.name, id: game._id, category: categoryEnums[game.category] }))))
       .catch(error => console.log(error))
   }
 
@@ -40,7 +41,15 @@ const SearchBar = () => {
       freeSolo
       id="search-bar"
       options={options}
-      getOptionLabel={(option) => option && option.name ? option.name : ""}
+      getOptionLabel={(option) => option.name}
+      renderOption={(props, option) => ( 
+        <li {...props} key={option.id}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}> 
+            <span>{option.name}</span>
+            <span style={{color: 'gray'}}>{option.category}</span>
+          </div>
+        </li> 
+      )}
       sx={{
         width: '100%',
       }}

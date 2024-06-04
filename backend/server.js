@@ -1,4 +1,5 @@
 const igdb = require('./igdb');
+const db = require('./db');
 const Game = require('./models/Game');
 
 const express = require('express');
@@ -13,8 +14,7 @@ app.use(express.json());
 
 mongoose.connect('mongodb://localhost:27017/igdb', {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true
+    useUnifiedTopology: true
 })
     .then(() => console.log('MongoDB connected successfully'))
     .catch(err => console.error(`MongoDB connection error: ${err}`));
@@ -35,7 +35,7 @@ getToken();
 app.get('/api/search', async (req, res) => {
     try {
         const query = req.query.query;
-        const response = await igdb.search(token, query);
+        const response = await db.searchGame(query);
         res.json(response);
     } catch (error) {
         res.status(500).json({ message: error.message });

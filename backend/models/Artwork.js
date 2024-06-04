@@ -9,4 +9,6 @@ const artworkSchema = new Schema({
     url: { type: String, required: false },
 });
 
+artworkSchema.index({ game: 1 });
+
 module.exports = mongoose.model('Artwork', artworkSchema);

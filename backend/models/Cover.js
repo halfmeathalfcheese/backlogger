@@ -9,4 +9,6 @@ const coverSchema = new Schema({
     url: { type: String, required: false }
 });
 
+coverSchema.index({ game: 1 });
+
 module.exports = mongoose.model('Cover', coverSchema);
