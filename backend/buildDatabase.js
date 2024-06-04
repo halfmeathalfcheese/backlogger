@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const igdb = require('./igdb');
 const Game = require('./models/Game');
+const Artwork = require('./models/Artwork');
+const Cover = require('./models/Cover');
 
 mongoose.connect('mongodb://localhost:27017/igdb', {
     useNewUrlParser: true,
@@ -12,40 +14,85 @@ const getToken = async () => {
     token = await igdb.getToken();
     console.log('token set as: ', token);
 }
-getToken();
 
-async function scrapeIGDBAndSaveToDB() {
+async function scrapeGamesAndSaveToDB() {
     try {
-        // Fetch data from IGDB API
-        const response = await igdb.createDatabase(token);
-        // Loop through each game in the response
-        console.log(response)
+        const response = await igdb.getAllGames(token);
         for (let gameData of response) {
-            // Create a new Game document with the game data
             gameData._id = gameData.id;
             delete gameData.id;
             const game = new Game(gameData);
-            await game.save();
+            try {
+                await game.save();
+            } catch (error) {
+                if (error.code === 11000) {
+                    console.log(`Game ${game.name} already exists in the database.`);
+                    continue;
+                } else {
+                    console.error(`Failed to save game to the database: ${error}`);
+                }
+            }
         }
         console.log(`Saved ${response.length} games to the database.`);
     } catch (error) {
         console.error(`Failed to scrape IGDB and save to DB: ${error}`);
-    } finally {
-        mongoose.connection.close();
     }
 }
 
-async function showGames() {
+async function scrapeArtworksAndSaveToDB() {
     try {
-        const games = await Game.find().limit(10);
-        console.log(games);
+        const response = await igdb.getAllArtworks(token);
+        for (let artworkData of response) {
+            artworkData._id = artworkData.id;
+            delete artworkData.id;
+            const artwork = new Artwork(artworkData);
+            try {
+                await artwork.save();
+            } catch (error) {
+                if (error.code === 11000) {
+                    console.log(`Artwork ${artwork.image_id} already exists in the database.`);
+                    continue;
+                } else {
+                    console.error(`Failed to save artwork to the database: ${error}`);
+                }
+            }
+        }
+        console.log(`Saved ${response.length} artworks to the database.`)
     } catch (error) {
-        console.error(`Failed to show games: ${error}`);
-    } finally {
-        mongoose.connection.close();
+        console.error(`Failed to scrape IGDB and save to DB: ${error}`);
     }
 }
 
-setTimeout(() => {
-    scrapeIGDBAndSaveToDB();
-} , 5000);
+async function scrapeCoversAndSaveToDB() {
+    try {
+        const response = await igdb.getAllCovers(token);
+        for (let coverData of response) {
+            coverData._id = coverData.id;
+            delete coverData.id;
+            const cover = new Cover(coverData);
+            try {
+                await cover.save();
+            } catch (error) {
+                if (error.code === 11000) {
+                    console.log(`Cover ${cover.image_id} already exists in the database.`);
+                    continue;
+                } else {
+                    console.error(`Failed to save cover to the database: ${error}`);
+                }
+            }
+        }
+        console.log(`Saved ${response.length} covers to the database.`)
+    } catch (error) {
+        console.error(`Failed to scrape IGDB and save to DB: ${error}`);
+    }
+}
+
+async function main() {
+    await getToken();
+    await scrapeGamesAndSaveToDB();
+    await scrapeArtworksAndSaveToDB();
+    await scrapeCoversAndSaveToDB();
+    mongoose.connection.close();
+}
+
+main()

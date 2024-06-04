@@ -10,8 +10,8 @@ const getToken = async () => {
     return data.access_token;
 }
 
-const createDatabase = async (token) => {
-    let offset = 266445;
+const getAllGames = async (token) => {
+    let offset = 0;
     let data = [];
     try {
         while (true) {
@@ -46,6 +46,69 @@ const createDatabase = async (token) => {
     }
 }
 
+const getAllArtworks = async (token) => {
+    let offset = 0;
+    let data = [];
+    try {
+        while (true) {
+            const response = await fetch(`https://api.igdb.com/v4/artworks`, {
+                method: 'POST',
+                headers: {
+                    'Client-ID': CLIENT_ID,
+                    'Authorization': `Bearer ${token}`
+                },
+                body: `fields 
+                id, animated, game,
+                image_id, url;
+                limit 500;
+                offset ${offset};`
+            });
+            const newData = await response.json();
+            if (newData.length === 0) {
+                break;
+            }
+            data = data.concat(newData);
+            offset += 500;
+            console.log(`Fetched ${offset} artworks...`)
+        }
+        return data;
+    } catch (error) {
+        console.log(error);
+        throw new Error('Failed to search');
+    }
+}
+
+const getAllCovers = async (token) => {
+    let offset = 0;
+    let data = [];
+    try {
+        while (true) {
+            const response = await fetch(`https://api.igdb.com/v4/covers`, {
+                method: 'POST',
+                headers: {
+                    'Client-ID': CLIENT_ID,
+                    'Authorization': `Bearer ${token}`
+                },
+                body: `fields
+                id, animated, game, image_id, url;
+                limit 500;
+                offset ${offset};`
+            });
+            const newData = await response.json();
+            if (newData.length === 0) {
+                break;
+            }
+            data = data.concat(newData);
+            offset += 500;
+            console.log(`Fetched ${offset} covers...`)
+        }
+        return data;
+    } catch (error) {
+        console.log(error);
+        throw new Error('Failed to search');
+    }
+}
+
 const search = async (token, query) => {
     try {
         const response = await fetch(`https://api.igdb.com/v4/games`, {
@@ -64,4 +127,4 @@ const search = async (token, query) => {
     }
 }
 
-module.exports = { getToken, search, createDatabase };
+module.exports = { getToken, search, getAllGames, getAllArtworks, getAllCovers };
