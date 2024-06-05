@@ -1,0 +1,6 @@
+.results-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(272px, 272px)); // adjust the minmax values according to your needs
+    justify-content: space-between;
+    gap: 30px;
+}

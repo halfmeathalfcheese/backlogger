@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Autocomplete, InputAdornment, TextField } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
-import categoryEnums from '../../utils/GameCategory.json'
+import categoryEnums from '../../../utils/GameCategory'
 
 const SearchBar = () => {
   const [inputValue, setInputValue] = React.useState('');
@@ -13,7 +13,6 @@ const SearchBar = () => {
       return;
     }
     console.log('run')
-    // Fetch data from API
     fetch(`http://localhost:3001/api/search?query=${searchQuery}`, {
       method: 'GET',
       headers: {
@@ -21,7 +20,17 @@ const SearchBar = () => {
       }
     })
       .then(response => response.json())
-      .then(data => setOptions(data.map(game => ({ name: game.name, id: game._id, category: categoryEnums[game.category] }))))
+      .then(data => 
+        setOptions(
+          data.map(
+            game => ({ 
+              name: game.name,
+              id: game._id,
+              category: categoryEnums[game.category] 
+            })
+          )
+        )
+      )
       .catch(error => console.log(error))
   }
 
