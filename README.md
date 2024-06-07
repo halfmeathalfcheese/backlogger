@@ -1,10 +1,10 @@
 # BackLogger
 
-BackLogger is a game tracking application that allows you to search through a library of games and track all your games across multiple platforms in a centralized platform.
+BackLogger is a game tracking application that allows you to search through a library of games and track all your games across multiple platforms in a centralized platform. Uses IGDB api in order to create database of games.
 
 ## Features
 
-- Game Library: Browse and search through a vast library of games.
+- Game Library: Browse and search through a library of games made through IGDB api.
 - Platform Tracking: Keep track of your games across multiple platforms.
 - Centralized Platform: All your game data is stored in a centralized platform for easy access.
 
