@@ -1,51 +1,40 @@
-## Tasks
+# BackLogger
 
-1. User Registration
-    - Create a registration form with fields for username, email, and password.
-    - Implement server-side validation to ensure all fields are filled out correctly.
-    - Store user registration data securely in a database.
-    - Send a confirmation email to the user after successful registration.
+BackLogger is a game tracking application that allows you to search through a library of games and track all your games across multiple platforms in a centralized platform.
 
-2. User Login
-    - Create a login form with fields for username/email and password.
-    - Implement server-side authentication to verify the user's credentials.
-    - Generate a session token upon successful login and store it securely.
-    - Redirect the user to the dashboard page after successful login.
+## Features
 
-3. Game Tracking
-    - Allow users to add games to their collection by providing game details such as title, platform, and release date.
-    - Implement CRUD operations for managing the user's game collection (create, read, update, delete).
-    - Display the user's game collection on the dashboard page.
+- Game Library: Browse and search through a vast library of games.
+- Platform Tracking: Keep track of your games across multiple platforms.
+- Centralized Platform: All your game data is stored in a centralized platform for easy access.
 
-4. Game Search
-    - Integrate a game search API to allow users to search for games by title or platform.
-    - Display search results with relevant game information.
-    - Allow users to add searched games to their collection.
+## Installation
 
-5. User Profile
-    - Create a user profile page where users can view and update their profile information.
-    - Implement functionality to change the user's password.
-    - Allow users to upload a profile picture.
+1. Clone the repository:
 
-6. User Authentication
-    - Implement password reset functionality to allow users to reset their forgotten passwords.
-    - Add email verification to ensure the user's email address is valid.
-    - Implement secure session management to handle user authentication and authorization.
+### Frontend
+1. Enter frontend directory `cd frontend`
+2. Install the dependencies: `npm install`
+3. Start Frontend `npm start`
 
-7. User Feedback
-    - Provide a feedback form or mechanism for users to report issues or suggest improvements.
-    - Implement a system to track and manage user feedback.
+### Backend
+**Work in Progress - currently needs docker with MongoDB container**
 
-8. Documentation
-    - Write detailed documentation on how to set up and run the app locally.
-    - Include instructions on how to deploy the app to a production environment.
-    - Document the API endpoints and their usage.
+**Requirements: Docker with MongoDB container**
+1. Enter backend directory `cd backend`
+2. Install the dependencies `npm install`
+3. Build database `node buildDatabase.js` - this will take a while
+4. Start server `node server.js`
 
-9. Testing
-    - Write unit tests to ensure the correctness of critical app functionality.
-    - Implement integration tests to verify the interaction between different components.
-    - Use a testing framework to automate the testing process.
+## Usage
 
-10. Deployment
-     - Set up a deployment pipeline to automatically build and deploy the app to a staging or production environment.
-     - Configure continuous integration and continuous deployment (CI/CD) tools for automated testing and deployment.
+1. Start the application: `npm start`
+2. Open your browser and navigate to `http://localhost:3000`
+
+## Contributing
+
+Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
