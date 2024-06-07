@@ -32,10 +32,20 @@ const getToken = async () => {
 getToken();
 
 // Search IGDB for search query
-app.get('/api/search', async (req, res) => {
+app.get('/api/search/:query', async (req, res) => {
     try {
-        const query = req.query.query;
+        const query = req.params.query;
         const response = await db.searchGame(query);
+        res.json(response);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+app.get('/api/cover/:gameId', async (req, res) => {
+    try {
+        const gameId = req.params.gameId;
+        const response = await db.findCover(gameId);
         res.json(response);
     } catch (error) {
         res.status(500).json({ message: error.message });

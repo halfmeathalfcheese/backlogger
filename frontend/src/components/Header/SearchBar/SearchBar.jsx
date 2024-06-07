@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Autocomplete, InputAdornment, TextField } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import SearchIcon from '@mui/icons-material/Search';
 import categoryEnums from '../../../utils/GameCategory'
 
@@ -7,13 +8,15 @@ const SearchBar = () => {
   const [inputValue, setInputValue] = React.useState('');
   const [options, setOptions] = React.useState([]);
 
+  const navigate = useNavigate();
+
   const doSearch = (searchQuery) => {
     if (searchQuery === '') {
       setOptions([]);
       return;
     }
     console.log('run')
-    fetch(`http://localhost:3001/api/search?query=${searchQuery}`, {
+    fetch(`http://localhost:3001/api/search/${searchQuery}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -41,9 +44,10 @@ const SearchBar = () => {
     return () => clearTimeout(timeoutId);
   }, [inputValue]);
 
-  useEffect(() => {
-    console.log('options changed', options);
-  }, [options]);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    navigate(`/search/${inputValue}`);
+  }
 
   return (
     <Autocomplete
@@ -67,6 +71,12 @@ const SearchBar = () => {
           {...params}
           margin="normal"
           placeholder="Search a game..."
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              event.preventDefault();
+              handleSubmit(event);
+            }
+          }}
           InputProps={{
             ...params.InputProps,
             type: "search",
@@ -76,7 +86,9 @@ const SearchBar = () => {
               </InputAdornment>
             ),
             onChange: (event) => {
-              setInputValue(event.target.value);
+              if (event.key !== 'Enter') {
+                setInputValue(event.target.value);
+              }
             },
           }}
           sx={{

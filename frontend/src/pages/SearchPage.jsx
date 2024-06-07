@@ -6,15 +6,21 @@ import SearchResultCard from "../components/SearchPage/SearchResultCard";
 
 const SearchPage = () => {
   const { query } = useParams();
+  const [results, setResults] = React.useState([]);
 
-  const results = [
-    { name: "Game 1", category: 0 },
-    { name: "Game 2", category: 1 },
-    { name: "Game 3", category: 2 },
-    { name: "Game 4", category: 0 },
-    { name: "Game 5", category: 1 },
-    { name: "Game 6", category: 2 },
-  ]
+  useEffect(() => {
+    if (!query) return;
+    console.log('query changed: ', query)
+    fetch(`http://localhost:3001/api/search/${query}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => setResults(data))
+      .catch(error => console.log(error))
+  }, [query]);
 
   return (
     <div className="search-results">
@@ -22,7 +28,6 @@ const SearchPage = () => {
         <h2>Results for: {query} </h2>
       </div>
       <div className="results-container">
-        {/* Display search results here */}
         {results.map((result, index) => (
           <SearchResultCard key={index} result={result} />
         ))}
