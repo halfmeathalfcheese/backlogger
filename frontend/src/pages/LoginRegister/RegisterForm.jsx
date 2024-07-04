@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { TextField, Button, InputAdornment, IconButton } from '@mui/material';
+import { TextField, Button, InputAdornment, IconButton, Typography } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 const RegisterForm = () => {
@@ -9,7 +9,8 @@ const RegisterForm = () => {
 
   return (
     <div className='register-box'>
-      <h2>Start Tracking Today</h2>
+      <Typography variant='h4' style={{marginBottom: '20px'}}>Register</Typography>
+      <Typography variant='body1' style={{marginBottom: '20px'}}>Create an account and never forget about a game again!</Typography>
       <form className='register-form'>
         <TextField 
           id="email-input" 
@@ -19,6 +20,14 @@ const RegisterForm = () => {
           fullWidth
           margin='normal'
         /> 
+        <TextField
+          id="username-input"
+          label='Username'
+          variant='filled'
+          required
+          fullWidth
+          margin='normal'
+        />
         <TextField 
           id="password-input" 
           label='Password' 

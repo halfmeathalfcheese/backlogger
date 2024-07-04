@@ -1,11 +1,14 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import { useNavigate } from 'react-router-dom';
 
-import './RegisterPage.scss';
+import './RegisterLoginPage.scss';
 import RegisterForm from './RegisterForm'
 import { registerPageImage } from '../../utils/ImageLinks';
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
 
   return (
     <div className='register-page'>
@@ -17,6 +20,12 @@ const RegisterPage = () => {
         />
       </div>
       <div className='register-right-panel'>
+        <IconButton
+          id='register-login-close-button'
+          onClick={() => navigate('/')}
+        >
+          <CloseIcon />
+        </IconButton>
         <RegisterForm />
       </div>
     </div>

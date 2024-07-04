@@ -7,7 +7,7 @@ import SearchResultCard from "../components/SearchPage/SearchResultCard";
 
 const SearchPage = () => {
   const { query } = useParams();
-  const [results, setResults] = React.useState([]);
+  const [allResults, setAllResults] = React.useState([]);
 
   useEffect(() => {
     if (!query) return;
@@ -19,7 +19,7 @@ const SearchPage = () => {
       }
     })
       .then(response => response.json())
-      .then(data => setResults(data))
+      .then(data => setAllResults(data))
       .catch(error => console.log(error))
   }, [query]);
 
@@ -30,7 +30,7 @@ const SearchPage = () => {
           <h2>Results for: {query} </h2>
         </div>
         <div className="results-container">
-          {results.map((result, index) => (
+          {allResults.map((result, index) => (
             <SearchResultCard key={index} result={result} />
           ))}
         </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { useLocation } from 'react-router-dom';
 
 import SearchBar from "./SearchBar/SearchBar";
@@ -26,7 +26,26 @@ const Header = () => {
       <div className="header-middle">
         <SearchBar initialQuery={searchQuery} />
       </div>
-      <div className="header-right"></div>
+      <div className="header-right">
+        <Typography
+          variant="h6"
+          fontWeight={600}
+          color="primary"
+          onClick={() => navigate('/register')}
+          style={{ cursor: "pointer" }}
+        >
+          Register
+        </Typography>
+        <Typography
+          variant="h6"
+          fontWeight={600}
+          color="primary"
+          onClick={() => navigate('/login')}
+          style={{ cursor: "pointer", marginLeft: "3%"}}
+        >
+          Login
+        </Typography>
+      </div>
     </div>
   );
 };

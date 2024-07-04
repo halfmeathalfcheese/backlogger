@@ -13,6 +13,11 @@
     flex: 1;
 }
 
+.header-right {
+    display: flex;
+    justify-content: flex-end;
+}
+
 .header-middle {
     width: 40%;
 }
