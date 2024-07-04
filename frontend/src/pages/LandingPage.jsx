@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from '@mui/material';
+import './Page.scss';
 
 const LandingPage = () => {
   const handleClick = () => {
@@ -14,7 +15,7 @@ const LandingPage = () => {
       .catch(error => console.log(error));
   }
   return (
-    <div className="LandingPage">
+    <div className="standard-page-body">
         <h1>Landing Page</h1>
         <Button 
           variant="contained" 

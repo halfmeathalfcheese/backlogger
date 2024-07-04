@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import SearchIcon from '@mui/icons-material/Search';
 import categoryEnums from '../../../utils/GameCategory'
 
-const SearchBar = () => {
-  const [inputValue, setInputValue] = React.useState('');
+const SearchBar = ({ initialQuery }) => {
+  const [inputValue, setInputValue] = React.useState(initialQuery || '');
   const [options, setOptions] = React.useState([]);
 
   const navigate = useNavigate();
@@ -15,7 +15,6 @@ const SearchBar = () => {
       setOptions([]);
       return;
     }
-    console.log('run')
     fetch(`http://localhost:3001/api/search/${searchQuery}`, {
       method: 'GET',
       headers: {
@@ -38,6 +37,7 @@ const SearchBar = () => {
   }
 
   useEffect(() => {
+    setOptions([]);
     const timeoutId = setTimeout(() => {
       doSearch(inputValue);
     }, 500);
@@ -46,7 +46,8 @@ const SearchBar = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    navigate(`/search/${inputValue}`);
+    setOptions([]);
+    navigate(`/search/${inputValue}`, { state: { searchQuery: inputValue } });
   }
 
   return (
@@ -54,7 +55,7 @@ const SearchBar = () => {
       freeSolo
       id="search-bar"
       options={options}
-      getOptionLabel={(option) => option.name}
+      getOptionLabel={(option) => option.name || inputValue}
       renderOption={(props, option) => ( 
         <li {...props} key={option.id}>
           <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}> 

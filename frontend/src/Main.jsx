@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import LandingPage from "./pages/LandingPage";
 import SearchPage from "./pages/SearchPage";
-import RegisterPage from "./pages/RegisterPage";
+import RegisterPage from "./pages/LoginRegister/LoginRegisterPage";
 import GamePage from "./pages/GamePage";
 
 const Main = () => {

@@ -17,6 +17,10 @@ const SearchResultCard = ({ result }) => {
     })
       .then(response => response.json())
       .then(data => {
+        if (data === null) {
+          setCover('https://t3.ftcdn.net/jpg/03/35/13/14/360_F_335131435_DrHIQjlOKlu3GCXtpFkIG1v0cGgM9vJC.jpg');
+          return;
+        };
         const url720p = data.url.replace('t_thumb', 't_720p');
         setCover(url720p);
       })
