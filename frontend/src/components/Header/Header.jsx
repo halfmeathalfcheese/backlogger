@@ -1,8 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Typography } from "@mui/material";
+import { Typography, Button } from "@mui/material";
 import { useLocation } from 'react-router-dom';
 
+import appLogo from "../../images/app-logo-invert.png";
 import SearchBar from "./SearchBar/SearchBar";
 
 const Header = () => {
@@ -13,38 +14,55 @@ const Header = () => {
   return (
     <div className="header">
       <div className="header-left">
-        <Typography
-          variant="h4"
-          fontWeight={600}
-          color="primary"
+        <Button
           onClick={() => navigate('/')}
           style={{ cursor: "pointer" }}
         >
-            BackLogger
-        </Typography>
+          <img src={appLogo} alt="App logo" />
+        </Button>
       </div>
       <div className="header-middle">
         <SearchBar initialQuery={searchQuery} />
       </div>
       <div className="header-right">
-        <Typography
-          variant="h6"
-          fontWeight={600}
-          color="primary"
-          onClick={() => navigate('/register')}
-          style={{ cursor: "pointer" }}
-        >
-          Register
-        </Typography>
-        <Typography
-          variant="h6"
-          fontWeight={600}
-          color="primary"
-          onClick={() => navigate('/login')}
-          style={{ cursor: "pointer", marginLeft: "3%"}}
-        >
-          Login
-        </Typography>
+        <div id="header-login-button">
+          <Typography
+            variant="h6"
+            fontWeight={600}
+            color="primary"
+            className="hover-enlarge"
+            onClick={() => navigate('/login')}
+            style={{ 
+              cursor: "pointer",
+              padding: "5px 15px",
+              border: "1px solid white",
+              borderRadius: "20px",
+              color: "white"
+            }}
+          >
+            Login
+          </Typography>
+        </div>
+        <div id="header-register-button">
+          <Typography
+            variant="h6"
+            fontWeight={600}
+            color="primary"
+            onClick={() => navigate('/register')}
+            className="hover-enlarge"
+            id="header-register-text"
+            style={{ 
+              cursor: "pointer",
+              color: "#141414",
+              padding: "5px 15px",
+              border: "1px solid white",
+              borderRadius: "20px",
+              backgroundColor: "white"
+            }}
+          >
+            Get Started
+          </Typography>
+        </div>
       </div>
     </div>
   );

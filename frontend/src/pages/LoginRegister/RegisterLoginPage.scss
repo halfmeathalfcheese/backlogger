@@ -29,7 +29,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-radius: 40px;
+    border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px;
     background-color: #fff;
     z-index: 2;
     margin-left: 50%;
@@ -37,7 +38,7 @@
     box-shadow: 0 4px 100px rgba(0, 0, 0);
 }
 
-.register-box {
+.login-register-box {
     width: 50%;
     display: flex;
     flex-direction: column;
@@ -45,7 +46,7 @@
     align-items: center;
 }
 
-.register-form {
+.login-register-form {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -59,7 +60,7 @@
     
 }
 
-#register-button {
+#register-button, #login-button {
     margin-top: 10px;
     width: 100%;
 }
