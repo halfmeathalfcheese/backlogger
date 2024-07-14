@@ -71,7 +71,7 @@ const SearchBar = ({ initialQuery }) => {
         <TextField
           {...params}
           margin="normal"
-          placeholder="Search a game..."
+          placeholder="Find Your Games..."
           onKeyDown={(event) => {
             if (event.key === 'Enter') {
               event.preventDefault();

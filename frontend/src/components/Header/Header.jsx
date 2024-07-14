@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Typography, Button } from "@mui/material";
+import { Typography } from "@mui/material";
 import { useLocation } from 'react-router-dom';
 
 import appLogo from "../../images/app-logo-invert.png";
@@ -14,12 +14,12 @@ const Header = () => {
   return (
     <div className="header">
       <div className="header-left">
-        <Button
-          onClick={() => navigate('/')}
-          style={{ cursor: "pointer" }}
-        >
-          <img src={appLogo} alt="App logo" />
-        </Button>
+          {/* Logo font: montserrat  */}
+          <img src={appLogo} 
+            alt="App logo" 
+            onClick={() => navigate('/')}
+            style={{ cursor: "pointer" }} 
+          />
       </div>
       <div className="header-middle">
         <SearchBar initialQuery={searchQuery} />

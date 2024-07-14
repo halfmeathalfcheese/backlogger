@@ -1,8 +1,15 @@
 .game-card {
-    border: 1px solid #eeeded;
+    border: 1px solid #8d8d8d;
     padding: 10px;
     display: flex;
     flex-direction: column;
+    transition: transform 0.1s;
+    background-color: #fcfcfc;
+}
+
+.game-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .game-card-cover {

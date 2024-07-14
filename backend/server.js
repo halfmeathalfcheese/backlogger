@@ -1,6 +1,6 @@
 const igdb = require('./igdb');
 const db = require('./db');
-const Game = require('./models/Game');
+const user = require('./user');
 
 const express = require('express');
 const cors = require('cors');
@@ -46,6 +46,28 @@ app.get('/api/cover/:gameId', async (req, res) => {
     try {
         const gameId = req.params.gameId;
         const response = await db.findCover(gameId);
+        res.json(response);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+app.post('/api/register', async (req, res) => {
+    try {
+        console.log('running register')
+        const { username, email, password } = req.body;
+        const response = await user.createUser(username, email, password);
+        res.json(response);
+    } catch (error) {
+        console.log('error in register: ', error.message);
+        res.json(error);
+    }
+});
+
+app.get('/api/game/:gameId', async (req, res) => {
+    try {
+        const gameId = req.params.gameId;
+        const response = await db.findGameById(gameId);
         res.json(response);
     } catch (error) {
         res.status(500).json({ message: error.message });

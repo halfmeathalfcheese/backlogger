@@ -1,0 +1,13 @@
+#landing-popular-games {
+    margin: auto;
+    padding: 0 15%;
+    padding-bottom: 2vh;
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(4, minmax(272px, 272px));
+    grid-gap: 2rem;
+
+    @media (max-width: 1200px) {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+}

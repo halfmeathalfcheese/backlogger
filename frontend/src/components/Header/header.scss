@@ -1,13 +1,12 @@
 .header {
     display: flex;
     align-items: center;
-    padding: 1rem 2rem;
+    padding: 1rem 15%;
     font-size: 1.2rem;
     font-weight: 600;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding-left: 15%;
-    padding-right: 15%;
-    background-color: #141414;
+    background-color: #202022;
+    max-height: 10vh;
 }
 
 .header-left, .header-right {

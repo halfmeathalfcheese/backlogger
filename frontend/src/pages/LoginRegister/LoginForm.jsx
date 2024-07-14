@@ -46,7 +46,7 @@ const LoginForm = () => {
           id='login-button' 
           variant='contained'
           style={{
-            background: 'linear-gradient(45deg, #8DA9FF 40%, #D481DE 60%)', 
+            background: '#141414', 
             color: 'white'
           }}
         >

@@ -47,4 +47,27 @@ const findCover = async (gameId) => {
     }
 }
 
-module.exports = { searchGame, findCover };
+const findGameById = async (gameId, preview=false) => {
+    const query = {
+        _id: gameId
+    };
+
+    try {
+        if (preview) {
+            const game = await Game
+                .findOne(query)
+                .select('name category first_release_date')
+                .exec();
+            return game;
+        } else {
+            const game = await Game
+                .findOne(query)
+                .exec();
+            return game;
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+
+module.exports = { searchGame, findCover, findGameById};
