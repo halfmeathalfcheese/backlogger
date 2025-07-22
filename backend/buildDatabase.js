@@ -4,12 +4,21 @@ const Game = require('./models/Game');
 const Artwork = require('./models/Artwork');
 const Cover = require('./models/Cover');
 
-mongoose.connect('mongodb://localhost:27017/igdb', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
 
-let token = '';
+const mongoUrl = process.env.MONGO_URL || 'mongodb://mongo:27017/igdb';
+
+mongoose.connect(mongoUrl)
+    .then(async () => {
+        console.log('✅ Connected to MongoDB');
+        await main();  // your main function that populates the DB
+        mongoose.connection.close();
+    })
+    .catch(err => {
+        console.error('❌ MongoDB connection error:', err);
+        process.exit(1);
+    });
+
+    let token = '';
 const getToken = async () => {
     token = await igdb.getToken();
     console.log('token set as: ', token);
@@ -18,22 +27,13 @@ const getToken = async () => {
 async function scrapeGamesAndSaveToDB() {
     try {
         const response = await igdb.getAllGames(token);
-        for (let gameData of response) {
+        const docs = response.map(gameData => {
             gameData._id = gameData.id;
             delete gameData.id;
-            const game = new Game(gameData);
-            try {
-                await game.save();
-            } catch (error) {
-                if (error.code === 11000) {
-                    console.log(`Game ${game.name} already exists in the database.`);
-                    continue;
-                } else {
-                    console.error(`Failed to save game to the database: ${error}`);
-                }
-            }
-        }
-        console.log(`Saved ${response.length} games to the database.`);
+            return gameData;
+        })
+        await Game.insertMany(docs, { ordered: false });
+        console.log(`Saved ${docs.length} games to the database.`);
     } catch (error) {
         console.error(`Failed to scrape IGDB and save to DB: ${error}`);
     }
@@ -42,22 +42,13 @@ async function scrapeGamesAndSaveToDB() {
 async function scrapeArtworksAndSaveToDB() {
     try {
         const response = await igdb.getAllArtworks(token);
-        for (let artworkData of response) {
+        const docs = response.map(artworkData => {
             artworkData._id = artworkData.id;
             delete artworkData.id;
-            const artwork = new Artwork(artworkData);
-            try {
-                await artwork.save();
-            } catch (error) {
-                if (error.code === 11000) {
-                    console.log(`Artwork ${artwork.image_id} already exists in the database.`);
-                    continue;
-                } else {
-                    console.error(`Failed to save artwork to the database: ${error}`);
-                }
-            }
-        }
-        console.log(`Saved ${response.length} artworks to the database.`)
+            return artworkData;
+        })
+        await Artwork.insertMany(docs, { ordered: false });
+        console.log(`Saved ${docs.length} artworks to the database.`);
     } catch (error) {
         console.error(`Failed to scrape IGDB and save to DB: ${error}`);
     }
@@ -66,22 +57,13 @@ async function scrapeArtworksAndSaveToDB() {
 async function scrapeCoversAndSaveToDB() {
     try {
         const response = await igdb.getAllCovers(token);
-        for (let coverData of response) {
+        const docs = response.map(coverData => {
             coverData._id = coverData.id;
             delete coverData.id;
-            const cover = new Cover(coverData);
-            try {
-                await cover.save();
-            } catch (error) {
-                if (error.code === 11000) {
-                    console.log(`Cover ${cover.image_id} already exists in the database.`);
-                    continue;
-                } else {
-                    console.error(`Failed to save cover to the database: ${error}`);
-                }
-            }
-        }
-        console.log(`Saved ${response.length} covers to the database.`)
+            return coverData;
+        })
+        await Cover.insertMany(docs, { ordered: false });
+        console.log(`Saved ${docs.length} covers to the database.`);
     } catch (error) {
         console.error(`Failed to scrape IGDB and save to DB: ${error}`);
     }
@@ -94,5 +76,3 @@ async function main() {
     await scrapeCoversAndSaveToDB();
     mongoose.connection.close();
 }
-
-main()

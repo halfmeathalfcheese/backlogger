@@ -1,11 +1,6 @@
 const mongoose = require('mongoose');
 const User = require('./models/User');
 
-mongoose.connect('mongodb://localhost:27017/igdb', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
-
 const createUser = async (username, email, password) => {
     try {
         const existingEmail = await User.findOne({ email });

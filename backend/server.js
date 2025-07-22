@@ -12,17 +12,19 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect('mongodb://localhost:27017/igdb', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-    .then(() => console.log('MongoDB connected successfully'))
-    .catch(err => console.error(`MongoDB connection error: ${err}`));
 
-
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+const mongoUrl = process.env.MONGO_URL || 'mongodb://mongo:27017/igdb';
+mongoose.connect(mongoUrl)
+    .then(() => {
+        console.log('Connected to MongoDB');
+        app.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`);
+        });
+    })
+    .catch(err => {
+        console.error('MongoDB connection error:', err);
+        process.exit(1);
+    });
 
 let token = '';
 const getToken = async () => {
