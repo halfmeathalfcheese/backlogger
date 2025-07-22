@@ -1,10 +1,10 @@
 import React from "react";
 import { Routes, Route } from 'react-router-dom';
 
-import LandingPage from "./pages/LandingPage";
-import SearchPage from "./pages/SearchPage";
+import LandingPage from "./pages/LandingPage/LandingPage";
+import SearchPage from "./pages/SearchPage/SearchPage";
 import LoginRegisterPage from "./pages/LoginRegister/LoginRegisterPage";
-import GamePage from "./pages/GamePage";
+import GamePage from "./pages/GamePage/GamePage";
 
 const Main = () => {
   return (

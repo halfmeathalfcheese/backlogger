@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Typography } from "@mui/material";
+
 import "./SearchPage.scss";
-import "./Page.scss";
-import SearchResultCard from "../components/SearchPage/SearchResultCard";
+import "../Page.scss";
+import SearchResultCard from "../../components/SearchPage/SearchResultCard";
+import LoadingElement from "../../components/LoadingElement/LoadingElement";
 
 const SearchPage = () => {
   const { query } = useParams();
@@ -27,9 +29,7 @@ const SearchPage = () => {
 
   if (isLoading) {
     return (
-      <div>
-        <Typography>Loading...</Typography>
-      </div>
+      <LoadingElement />
     );
   }
 

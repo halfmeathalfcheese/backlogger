@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Typography, Box } from '@mui/material';
 
-import './Page.scss';
+import '../Page.scss';
 import './LandingPage.scss';
-import { landingPageImage } from '../utils/ImageLinks';
-import SearchResultCard from "../components/SearchPage/SearchResultCard";
+import { landingPageImage } from '../../utils/ImageLinks';
+import SearchResultCard from "../../components/SearchPage/SearchResultCard";
+import LoadingElement from '../../components/LoadingElement/LoadingElement';
 
 const LandingPage = () => {
   const [popularGameData, setPopularGameData] = useState([]);
@@ -30,9 +31,7 @@ const LandingPage = () => {
 
   if (isLoading) {
     return (
-      <div>
-        <Typography>Loading...</Typography>
-      </div>
+      <LoadingElement />
     );
   };
 

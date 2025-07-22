@@ -1,9 +1,12 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import "./SearchResultCard.scss";
 import categoryEnums from "../../utils/GameCategory";
 
 const SearchResultCard = ({ result }) => {
+  const navigate = useNavigate();
+
   const [cover, setCover] = React.useState('');
   const releaseYear = new Date(result.first_release_date).getFullYear() || 'N/A';
 
@@ -28,7 +31,7 @@ const SearchResultCard = ({ result }) => {
   }, [result]);
 
   return (
-    <div className="game-card" id={result._id}>
+    <div className="game-card" id={result._id} onClick={() => navigate(`/game/${result._id}`)}>
       <div className="game-card-cover">
         <img src={cover} alt="Game cover art" />
       </div>
