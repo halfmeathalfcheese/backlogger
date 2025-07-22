@@ -37,6 +37,7 @@ getToken();
 app.get('/api/search/:query', async (req, res) => {
     try {
         const query = req.params.query;
+        console.log('Search query:', query);
         const response = await db.searchGame(query);
         res.json(response);
     } catch (error) {
