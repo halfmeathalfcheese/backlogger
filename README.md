@@ -23,8 +23,8 @@ It uses the IGDB API to create and populate a database of games.
 1. Clone the repository:
 
     ```bash
-    git clone <your-repo-url>
-    cd <your-repo-folder>
+    git clone git@github.com:halfmeathalfcheese/backlogger.git
+    cd backlogger
     ```
 
 2. Build and start all services with Docker Compose:
@@ -33,10 +33,36 @@ It uses the IGDB API to create and populate a database of games.
     docker compose up --build
     ```
 
+ ### Alternative Installation Using Make
+
+ If you have `make` installed, you can use the provided Makefile for streamlined setup:
+
+ 1. Clone the repository:
+
+     ```bash
+     git clone git@github.com:halfmeathalfcheese/backlogger.git
+     cd backlogger
+     ```
+
+ 2. Build and start all services:
+
+     ```bash
+     make up
+     make builddb
+     ```
+
+ 3. To stop all services:
+
+     ```bash
+     make down
+     ```
+
+ Refer to the Makefile for additional commands and options.
+
 This starts:
 - Backend on [http://localhost:3001](http://localhost:3001)
 - Frontend on [http://localhost:3000](http://localhost:3000)
-- MongoDB on [mongodb://localhost:27017](mongodb://localhost:27017)
+- MongoDB on [mongodb://mongo:27017/igdb](mongodb://mongo:27017/igdb)
 
 ### Manual Installation
 
