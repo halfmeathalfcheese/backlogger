@@ -55,6 +55,20 @@ const RegisterForm = () => {
     })
     if (response.ok) {
       console.log('User created successfully.');
+      response.json().then(data => {
+        localStorage.setItem('userToken', data.token);
+      });
+    } else {
+      const errorData = await response.json();
+      if (errorData.error) {
+        if (errorData.error.includes('Email already exists')) {
+          setEmailError('Email already exists');
+        } else if (errorData.error.includes('Username already exists')) {
+          setUsernameError('Username already exists');
+        } else {
+          console.error('Registration failed:', errorData.error);
+        }
+      }
     }
   }
 

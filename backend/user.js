@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const User = require('./models/User');
+const jwt = require('jsonwebtoken');
 
 const createUser = async (username, email, password) => {
     try {
@@ -16,8 +17,9 @@ const createUser = async (username, email, password) => {
         const user = new User({ username, email, password });
         await user.save();
         console.log('User created successfully with: ', user._id);
-        // TODO: Create token for user and return it
-        return user;
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        console.log('Generated JWT token:', token);
+        return { user, token };
     } catch (error) {
         console.error(`Failed to create user: ${error.message}`);
         throw new Error(`Failed to create user: ${error}`);

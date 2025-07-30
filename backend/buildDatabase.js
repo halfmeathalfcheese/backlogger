@@ -10,7 +10,7 @@ const mongoUrl = process.env.MONGO_URL || 'mongodb://mongo:27017/igdb';
 mongoose.connect(mongoUrl)
     .then(async () => {
         console.log('✅ Connected to MongoDB');
-        await main();  // your main function that populates the DB
+        await main(); 
         mongoose.connection.close();
     })
     .catch(err => {
